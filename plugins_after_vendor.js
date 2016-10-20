@@ -1,5 +1,5 @@
 /*
-* this code enables plugin devs to expose hidden data from internal "classes" they need for their addons
+* this script enables plugin devs to expose hidden data from internal duelyst "classes" they need for their plugins
 */
 
 if(!window.custom_plugins)

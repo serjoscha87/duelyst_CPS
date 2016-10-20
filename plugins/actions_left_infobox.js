@@ -68,6 +68,10 @@ custom_plugins.concrete.actions_left_infobox = class extends window.custom_plugi
     
     update_data(){ // triggered with END_STEP
 
+        /*
+         * TODO gosh.. beautify this for the sake of all devs... ever..
+         */
+
         if(!this.getMyPlayer().isCurrentPlayer)
             return;
 
@@ -141,6 +145,28 @@ custom_plugins.concrete.actions_left_infobox = class extends window.custom_plugi
         info_container.appendTo($('#plugin_ali_box'));
 
         (!can_play_any_card && did_replace && played_signature && actions_left===0) && (info_container.append('<br/><b style="color:green">No action left</b>'));
+
+        /***************************
+         * special quest info box
+         ****************************/
+        if (internal_gs.gameType === SDK.GameType.Gauntlet || internal_gs.gameType === SDK.GameType.Ranked) {
+            if (window.custom_plugins.has_aggressor_q || window.custom_plugins.has_assassin_q)
+                $('#plugin_sqi_box').html('<b style="text-decoration: underline;">Quest Info:</b>');
+
+            if (window.custom_plugins.has_aggressor_q) {
+                if (this.getMyPlayer().totalDamageDealt >= 40)
+                    $('#plugin_sqi_box').append('<div>Ultimate Aggressor: <b color="green">DONE</b>');
+                else
+                    $('#plugin_sqi_box').append('<div>Ultimate Aggressor: ' + this.getMyPlayer().totalDamageDealt + "/40</div>");
+            }
+
+            if (window.custom_plugins.has_assassin_q) {
+                if (this.getMyPlayer().totalMinionsKilled >= 5)
+                    $('#plugin_sqi_box').append('<div>Assassin: <b color="green">DONE</b>');
+                else
+                    $('#plugin_sqi_box').append('<div>Assassin: ' + this.getMyPlayer().totalMinionsKilled + "/5</div>");
+            }
+        }
 
     }
 
