@@ -4,7 +4,7 @@
                  ************ after duelyst.js **********
                  ****************************************/ 
                 
-                //SDK.PlayModeFactory.playModes.sandbox.isHiddenInUI = false;
+                SDK.PlayModeFactory.playModes.sandbox.isHiddenInUI = false;
                 
                 var PL = new window.custom_plugins.PluginLoader;
                 
