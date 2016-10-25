@@ -9,6 +9,7 @@ window.custom_plugins.eventHooks = {
         SHOW_START_TURN : {p:'custom_plugins.exposedInsts.FXCompositeLayer.prototype:showStartTurn'},
         
         END_STEP : {p: 'SDK.GameSession.getInstance().__proto__:_endStep'},
+        APPLY_MODIFIER_ACTION: {p: 'SDK.ApplyModifierAction.prototype:_execute'}
     },
     c_APPLICATION_CREATED : {
         p:'custom_plugins.plugin_events:application_created',
