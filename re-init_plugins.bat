@@ -1,1 +1,0 @@
-dir plugins /B /A-D /O-N | findstr /e .js > plugins/_plugin_list.nlsv
