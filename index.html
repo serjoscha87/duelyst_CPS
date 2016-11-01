@@ -1,0 +1,56 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><title>DUELYST</title><link rel=icon type=image/gif href=https://assets.duelyst.com/favicon.gif><link rel="shortcut icon" href=https://assets.duelyst.com/favicon.ico><meta name=description><meta name=viewport content="width=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta name=screen-orientation content=portrait><meta name=apple-mobile-web-app-capable content=yes><meta name=msapplication-tap-highlight content=no><meta name=full-screen content=yes><meta name=x5-fullscreen content=true><script type=text/javascript>
+					// this is for cocos
+					window.ccMapLimit = 100
+				</script><link rel=stylesheet href=duelyst.css><script type=text/javascript>
+				  window.analytics=window.analytics||[],window.analytics.methods=["identify","group","track","page","pageview","alias","ready","on","once","off","trackLink","trackForm","trackClick","trackSubmit"],window.analytics.factory=function(t){return function(){var a=Array.prototype.slice.call(arguments);return a.unshift(t),window.analytics.push(a),window.analytics}};for(var i=0;i<window.analytics.methods.length;i++){var key=window.analytics.methods[i];window.analytics[key]=window.analytics.factory(key)}window.analytics.load=function(t){if(!document.getElementById("analytics-js")){var a=document.createElement("script");a.type="text/javascript",a.id="analytics-js",a.async=!0,a.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.io/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n)}},window.analytics.SNIPPET_VERSION="2.0.9",
+				  window.analytics.load("0axyxrkd8d");
+				  window.analytics.page("Index",{ path: "/" });
+				</script><script>
+
+					(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+							(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+									m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+					})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+					if (window.isDesktop) {
+						var uuid = window.erequire('node-uuid')
+						if (!localStorage["gaClientId"])
+							localStorage.setItem("gaClientId",uuid.v4())
+						var clientId = localStorage["gaClientId"];
+						ga('create', "UA-53345529-2",{
+							'storage': 'none',
+							'clientId': clientId
+						});
+						ga('set', 'checkProtocolTask', function(){}); // Disable file protocol checking.
+					} else {
+						ga('create', "UA-53345529-2", 'auto');
+					}
+					ga('send', 'pageview');
+				</script></head><body><div id=app><div id=app-main><div id=app-horizontal><canvas id=app-gamecanvas></canvas><div id=app-content-region></div><div id=app-utility-region></div></div><div id=app-vertical><div id=app-modal-region></div><div id=app-notifications-region></div></div></div><div id=app-overlay-region></div><div id=tos style=display:none;><a href=https://www.duelyst.com/tos.html>Terms</a> | <a href=https://www.duelyst.com/privacy.html>Privacy</a></div><div id=maintenance-announcements-region></div><div id=app-preloading><div class=brand-main><h1>DUELYST</h1></div></div></div>
+<script src=vendor.js crossorigin></script>
+<script src=plugins.js crossorigin></script>
+<script src=duelyst.js crossorigin></script>
+<script src=plugins.js crossorigin></script>
+<script type=text/javascript src="https://js.stripe.com/v2/"></script><script>
+			// Include the UserVoice JavaScript SDK (only needed once on a page)
+			UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='https://widget.uservoice.com/NvtdMVK9nSXRvpfG4u4rMg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+			//
+			// UserVoice Javascript SDK developer documentation:
+			// https://www.uservoice.com/o/javascript-sdk
+			//
+
+			// Set colors
+			UserVoice.push(['set', {
+			  accent_color: '#448dd6',
+			  trigger_color: 'black',
+			  trigger_background_color: 'rgba(255, 255, 255, 0.6)',
+				position: 'top'
+			}]);
+
+			// Add default trigger to the bottom-right corner of the window:
+			// UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+
+			// Or, use your own custom trigger:
+			// UserVoice.push(['addTrigger', '#open_support_widget', { mode: 'contact' }]);
+			</script></body></html>
