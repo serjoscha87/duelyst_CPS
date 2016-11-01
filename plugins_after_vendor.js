@@ -13,6 +13,7 @@ $.extend(window.custom_plugins, {
             'TTdhSFPDv8OMf0Rtw4TCsMOyEnPCkg==' 					: 'battlelog' // 1096@duelyst.js => battlelog behavior and logic			|| note: cc.Class.prototype.getScene().getGameLayer()._battleLog
             //,'IsKWw7w/XMO8QMO2wodLwrRIEGDDvsOu'					: 'battlemap' // 1097 
             ,'GcOaQ8O6wpktw5DDvsOXXADCnsOJw7nDpVs=' 				: 'FXCompositeLayer' // 1099@duelyst.js => much control over view elements that is needed when wanting to hook into match start ui actions
+            ,'acOGGsKzdsKATsO4DsOxCmt5w6sowrM='                                 : 'FXCompositeLayer_ScreenTransitions' // 1101
     },
 
     // don't bother about these
@@ -25,7 +26,7 @@ cc.Class.orig_ccClassExtend = cc.Class.extend; // save original vendor func
 cc.Class.extend = function(t) { // now overwrite it with own stuff (hook)
     var hiddenCMinstance = cc.Class.orig_ccClassExtend.call(this, t); // call the original extend to fetch the later hidden object
     var tableHash = window.custom_plugins.util.genTableId(t); // table data identification string...
-            //if(t._showLoginMenu) console.info(tableHash); // for dev: get the hash of a desired table printed to the console NOTE NOTE NOTE NOTE NOTE NOTE NOTE DONT TAKE FIELDS THAT ARE NULL!!!
+            //if(t.onClickWatch) console.info(tableHash); // for dev: get the hash of a desired table printed to the console NOTE NOTE NOTE NOTE NOTE NOTE NOTE DONT TAKE FIELDS THAT ARE NULL!!!
     if(window.custom_plugins.toExpose[tableHash]) { // so if we want this internal data to be exposed...
             var orig_ctor = hiddenCMinstance.prototype.ctor; // save original constructor of this internal data
             hiddenCMinstance.prototype.ctor = function(){  // hook our custom code into the internal data constructor

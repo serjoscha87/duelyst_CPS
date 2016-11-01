@@ -1,11 +1,3 @@
-/*
-var customer = { name: "Foo" }
-var card = { amount: 7, product: "Bar", unitprice: 42 }
-var message = `Hello ${customer.name},
-want to buy ${card.amount} ${card.product} for
-a total of ${card.amount * card.unitprice} bucks?
- */
-
 custom_plugins.concrete.last = 
 custom_plugins.concrete.actions_left_infobox = class extends window.custom_plugins.Plugin {
 
@@ -41,37 +33,15 @@ custom_plugins.concrete.actions_left_infobox = class extends window.custom_plugi
                     pointer-events: auto;
                 }
             </style>
-        `).appendTo("head");
+        `).appendTo("head"); // NOTE THAT THE SPECIAL QUEST INFO PLUGIN ALSO NEED THIS CSS! 
     }
     
     infuse_dom() { // triggered with SHOW_ACTIVE_GAME
-        /****************************************************
-        ******************** Create the "Actions left" infobox in DOM
-        *****************************************************/
         $(document.createElement('div'))
                 .addClass('ingame_infobox')
                 .attr('id', 'plugin_ali_box')
                 .draggable()
                 .appendTo($("#app-game-right-region"));
-
-        /****************************************************
-        ******************** Create the "Special Quest" infobox in DOM 
-        *****************************************************/
-        //var qs = QuestsManager.instance.dailyQuestsCollection._byId;
-        // 20000 = welcome back quest
-        var qs = QuestsManager.instance.getQuestCollection().models;
-        for(var quest in qs) {
-                if( (qs[quest].attributes.quest_type_id === 500 || qs[quest].attributes.quest_type_id === 401) && $('#plugin_sqi_box').length === 0 ) {
-                        $(document.createElement('div'))
-                                .addClass('ingame_infobox')
-                                .attr('id', 'plugin_sqi_box')
-                                .appendTo($("#app-game-right-region")); //  DRAGGABLE
-                }
-                if(qs[quest].attributes.quest_type_id === 500)
-                        window.custom_plugins.has_aggressor_q = true;
-                else if(qs[quest].attributes.quest_type_id === 401)
-                        window.custom_plugins.has_assassin_q = true;
-        }
     }
     
     update_data(){ // triggered with END_STEP
@@ -115,66 +85,44 @@ custom_plugins.concrete.actions_left_infobox = class extends window.custom_plugi
         var units_on_board = internal_gs.board.getCards();
         var actions_left=0;
         for(var unit in units_on_board) {
-                if(units_on_board[unit].ownerId === ProfileManager.instance.profile.id)
-                        if(
-                        !units_on_board[unit].getIsExhausted() // not exhausted
-                                && // AND
-                        // (enemy minions in meele range OR could move around OR is ranged minion)
-                        (internal_gs.board.getEnemyEntitiesAroundEntity(internal_gs.board.getCards()[unit]).length!==0 || units_on_board[unit].getCanMove() || units_on_board[unit].isRanged() ) 
-                                && // AND
-                        !units_on_board[unit].getIsBattlePet() // minion is not a battlepet
-                        ) {
-                                $(document.createElement('div'))
-                                        .text(units_on_board[unit].name)
-                                        .data({x:units_on_board[unit].position.x,y:units_on_board[unit].position.y})
-                                        .on('mouseenter',function(){
-                                                var x = $(this).data('x');
-                                                var y = $(this).data('y');
-                                                custom_plugins.exposed.FXCompositeLayer.showInstructionalArrowForEntityNode(custom_plugins.exposed.FXCompositeLayer.getEntityNodeAtBoardPosition(x,y));
-                                        })
-                                        .appendTo(info_container);
-                                //unit_actions_left_string += '<div data-unitid='+unit+'>'+units_on_board[unit].name+"</div>";
-                                actions_left++;
-                        }
+            if(units_on_board[unit].ownerId === ProfileManager.instance.profile.id)
+                if( // \|/ multiline conditions
+                    !units_on_board[unit].getIsExhausted() // not exhausted
+                            && // AND
+                    // (enemy minions in meele range OR could move around OR is ranged minion)
+                    (internal_gs.board.getEnemyEntitiesAroundEntity(internal_gs.board.getCards()[unit]).length!==0 || units_on_board[unit].getCanMove() || units_on_board[unit].isRanged() ) 
+                            && // AND
+                    !units_on_board[unit].getIsBattlePet() // minion is not a battlepet
+                ) {
+                        $(document.createElement('div'))
+                            .text(units_on_board[unit].name)
+                            .data({x:units_on_board[unit].position.x,y:units_on_board[unit].position.y})
+                            .on('mouseenter',function(){
+                                    var x = $(this).data('x');
+                                    var y = $(this).data('y');
+                                    custom_plugins.exposed.FXCompositeLayer.showInstructionalArrowForEntityNode(custom_plugins.exposed.FXCompositeLayer.getEntityNodeAtBoardPosition(x,y));
+                            })
+                            .appendTo(info_container);
+                        //unit_actions_left_string += '<div data-unitid='+unit+'>'+units_on_board[unit].name+"</div>";
+                        actions_left++;
+                }
         }
         !actions_left && (info_container.append("<br/>&mdash;"));
 
-        // print stuff
+        // print out stuff
         $('#plugin_ali_box').html(
-                '<b style="text-decoration: underline;">Actions left:</b><br/>' +
-                (can_play_any_card ? "* Play a card<br/>":'') +
-                (!did_replace ? '* Replace<br/>':'') +
-                (!played_signature ? '* Bloodborn Spell<br/>':'') +
-                        ( (!can_play_any_card && did_replace && played_signature) ? "&mdash;<br/>":'' ) //+ // only a indicator dash
-                //unit_actions_left_string + 
-                //( (!can_play_any_card && did_replace && played_signature && actions_left===0) ? '<br/><b style="color:green">No action left</b>':'') //; NO S!
+            '<b style="text-decoration: underline;">Actions left:</b><br/>' +
+            (can_play_any_card ? "* Play a card<br/>":'') +
+            (!did_replace ? '* Replace<br/>':'') +
+            (!played_signature ? '* Bloodborn Spell<br/>':'') +
+                    ( (!can_play_any_card && did_replace && played_signature) ? "&mdash;<br/>":'' ) //+ // only a indicator dash
+            //unit_actions_left_string + 
+            //( (!can_play_any_card && did_replace && played_signature && actions_left===0) ? '<br/><b style="color:green">No action left</b>':'') //; NO S!
         );
 
         info_container.appendTo($('#plugin_ali_box'));
 
         (!can_play_any_card && did_replace && played_signature && actions_left===0) && (info_container.append('<br/><b style="color:green">No action left</b>'));
-
-        /***************************
-         * special quest info box
-         ****************************/
-        if (internal_gs.gameType === SDK.GameType.Gauntlet || internal_gs.gameType === SDK.GameType.Ranked) {
-            if (window.custom_plugins.has_aggressor_q || window.custom_plugins.has_assassin_q)
-                $('#plugin_sqi_box').html('<b style="text-decoration: underline;">Quest Info:</b>');
-
-            if (window.custom_plugins.has_aggressor_q) {
-                if (this.getMyPlayer().totalDamageDealt >= 40)
-                    $('#plugin_sqi_box').append('<div>Ultimate Aggressor: <b color="green">DONE</b>');
-                else
-                    $('#plugin_sqi_box').append('<div>Ultimate Aggressor: ' + this.getMyPlayer().totalDamageDealt + "/40</div>");
-            }
-
-            if (window.custom_plugins.has_assassin_q) {
-                if (this.getMyPlayer().totalMinionsKilled >= 5)
-                    $('#plugin_sqi_box').append('<div>Assassin: <b color="green">DONE</b>');
-                else
-                    $('#plugin_sqi_box').append('<div>Assassin: ' + this.getMyPlayer().totalMinionsKilled + "/5</div>");
-            }
-        }
 
     }
 
