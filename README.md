@@ -1,5 +1,4 @@
-# duelyst Collaborative Plugin System
-repo for the duelyst plugin collaboration system
+# Duelyst Collaborative Plugin System Repo
 
 all information on : http://duelyst.r4nd0m.org/
 
