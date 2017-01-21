@@ -1,23 +1,23 @@
-custom_plugins.concrete.last =
-custom_plugins.concrete.turn_notifier = class extends window.custom_plugins.Plugin {
-
-    constructor() {
-        super();
-
-        super.addListener(function () {
-            if (this.getMyPlayer().isCurrentPlayer) { // this.getIsMyTurn() -> better
-                if (!document.hasFocus()) {
-                    if (Notification.permission !== "granted")
-                        Notification.requestPermission();
-                    else {
-                        var notification = new Notification('Duelyst', {
-                            icon: 'https://duelyst.com/favicon.ico',
-                            body: "Psssst! Your turn just started!",
-                        });
-                    }
-                }
+custom_plugins.PluginLoader.getInstance().addPlugin(
+   class TurnNotifier extends custom_plugins.Plugin {
+      constructor() {
+         super();
+         this.VERSION = "1.1";
+         this.URL = "http://duelyst.r4nd0m.org/page/duelyst_plugins/turn-notifier";
+         super.addListener(function () {
+            if (this.getIsMyTurn()) {
+               if (!document.hasFocus()) {
+                  if (Notification.permission !== "granted")
+                     Notification.requestPermission();
+                  else {
+                     new Notification('Duelyst', {
+                        icon: 'https://duelyst.com/favicon.ico',
+                        body: "Psssst! Your turn just started!",
+                     });
+                  }
+               }
             }
-        }, window.custom_plugins.eventHooks.SESSION_CREATED.SHOW_START_TURN);
-    }
-
-};
+         }, window.custom_plugins.eventHooks.SESSION_CREATED.SHOW_START_TURN);
+      }
+   }
+);
